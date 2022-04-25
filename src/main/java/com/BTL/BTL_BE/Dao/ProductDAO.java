@@ -16,5 +16,6 @@ import org.springframework.data.jpa.repository.Query;
 
 @Repository
 public interface ProductDAO extends JpaRepository<Product, Long> {
-    
+    @Query("SELECT u FROM Product u WHERE u.Quantity >=0 ORDER BY u.ID_Product DESC")
+    ArrayList<Product> getList();
 }
