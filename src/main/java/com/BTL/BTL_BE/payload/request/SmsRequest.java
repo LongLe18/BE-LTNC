@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotBlank;
 
 public class SmsRequest {
-    @NotBlank
+     @NotBlank
     private final String phoneNumber; // destination
     @NotBlank
     private final String password;

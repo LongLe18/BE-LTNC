@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface BrandDAO extends JpaRepository<Brand, Long>{
     List<Brand> findAll();
     
+    
     @Query("SELECT u FROM Brand u WHERE u.parentBrand='null'")
     ArrayList<Brand> getListParentBrand();
     

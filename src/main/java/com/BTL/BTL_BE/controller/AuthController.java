@@ -122,7 +122,7 @@ public class AuthController {
         result.setMessage("Đăng ký thành công");
         return new ResponseEntity<MessageResponse>(result, HttpStatus.ACCEPTED);
     }
-    @GetMapping("/signout")
+    @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
         MessageResponse result = new MessageResponse();
