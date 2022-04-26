@@ -4,20 +4,20 @@
  */
 package com.BTL.BTL_BE.Dao;
 
+import com.BTL.BTL_BE.entity.Category;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
 /**
  *
- * @author ACER
+ * @author nguye
  */
-import java.util.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import com.BTL.BTL_BE.entity.Category;
-import org.springframework.data.jpa.repository.Query;
-
 @Repository
-public interface CategoryDAO extends JpaRepository<Category, Long>{
-    
-    // load danh sach danh muc cha
+public interface CategoryDAO extends JpaRepository<Category, Long> {
+    List<Category> findAll();
     @Query("SELECT u FROM Category u WHERE u.Parent_Category='null'")
     ArrayList<Category> getListParentCategory();
     

@@ -4,18 +4,30 @@
  */
 package com.BTL.BTL_BE.Dao;
 
+import com.BTL.BTL_BE.entity.Product;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 /**
  *
- * @author ACER
+ * @author nguye
  */
-import java.util.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import com.BTL.BTL_BE.entity.Product;
-import org.springframework.data.jpa.repository.Query;
-
 @Repository
-public interface ProductDAO extends JpaRepository<Product, Long> {
-    @Query("SELECT u FROM Product u WHERE u.Quantity >=0 ORDER BY u.ID_Product DESC")
+public interface ProductDAO extends JpaRepository<Product, Long>{
+//    Optional<Product> findbyID_Product();
+//    List<Product> findAll();
+    @Query("SELECT u FROM Product u WHERE u.Quantity >=0 ORDER BY u.IDProduct DESC")
     ArrayList<Product> getList();
+    
+    @Query("SELECT u FROM Product u WHERE u.Quantity >=0 ORDER BY u.IDProduct DESC")
+    ArrayList<Product> getListProductByPages(Pageable pageable);
+    
+    List<Product> findByIDProduct(String IDProduct);
+    List<Product> findByIDBrand(String IDBrand);
+    List<Product> findByIDSeason(int IDSeasion);
+    List<Product> findByNameProduct(String Name);
 }

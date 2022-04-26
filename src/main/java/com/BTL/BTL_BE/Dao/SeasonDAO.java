@@ -4,19 +4,19 @@
  */
 package com.BTL.BTL_BE.Dao;
 
+import com.BTL.BTL_BE.entity.Season;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.stereotype.Repository;
+
 /**
  *
- * @author ACER
+ * @author nguye
  */
-import java.util.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import com.BTL.BTL_BE.entity.Advertise;
-import org.springframework.data.jpa.repository.Query;
-
 @Repository
-public interface AdvertiseDAO extends JpaRepository<Advertise, Long>{
-    List<Advertise> findAll();
-    @Query("SELECT u FROM Advertise u ORDER BY u.idAds")
-    List<Advertise> getList();
+public interface SeasonDAO extends JpaRepository<Season, Long> {
+    List<Season> findAll();
+   
+    
 }
