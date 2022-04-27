@@ -26,6 +26,7 @@ public interface ProductDAO extends JpaRepository<Product, Long>{
     @Query("SELECT u FROM Product u WHERE u.Quantity >=0 ORDER BY u.IDProduct DESC")
     ArrayList<Product> getListProductByPages(Pageable pageable);
     
+    List<Product> findByIDCategory(String IDCategory, Pageable pageable);
     List<Product> findByIDProduct(String IDProduct);
     List<Product> findByIDBrand(String IDBrand);
     List<Product> findByIDSeason(int IDSeasion);

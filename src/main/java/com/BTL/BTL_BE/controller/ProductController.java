@@ -141,7 +141,26 @@ public class ProductController {
             
             return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
         }    
-    }  
+    }
+    
+    @GetMapping("/getProductByCategory")
+    public ResponseEntity<MessageResponse> GetProductByCategory(@RequestParam(name="IDCategory") String id,
+            @RequestParam(name="pageSize") int pageSize, @RequestParam(name="pageIndex") int pageIndex)
+    {
+        MessageResponse result = new MessageResponse();
+        Pageable pageable = PageRequest.of(pageIndex, pageSize);
+        try {
+            result.setData(productdao.findByIDCategory(id, pageable));
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
+    
     @GetMapping("/getSaleProduct")
 //    public ResponseEntity<MessageResponse> GetProductByID(@Valid @RequestBody ProductRequest productRequest)
     public ResponseEntity<MessageResponse> GetSaleProduct()
