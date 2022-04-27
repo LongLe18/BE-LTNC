@@ -63,11 +63,40 @@ public class AuthController {
     
     @GetMapping("/info")
     public ResponseEntity<?> getInfoUser(@RequestHeader(value="X-API-KEY") String jwt) {
-        String JWT = Arrays.asList(Arrays.asList(jwt.split(";")).get(0).split("=")).get(1);
-        String UserId = jwtUtils.getIdFromJwtToken(JWT);
-        Optional<AppUser> userDetails = userRepository.findByuserId(UserId);
-        return ResponseEntity.ok()
-            .body(userDetails);
+        try {
+            if (jwt == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                String JWT = Arrays.asList(Arrays.asList(jwt.split(";")).get(0).split("=")).get(1);
+                String UserId = jwtUtils.getIdFromJwtToken(JWT);
+                Optional<AppUser> userDetails = userRepository.findByuserId(UserId);                
+                return ResponseEntity.ok()
+                    .body(userDetails);
+            }        
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PutMapping("/user/{id}")
+    public ResponseEntity<MessageResponse> updateUser(@PathVariable("id") String id, @RequestBody AppUser user) {
+        Optional<AppUser> userDetail = userRepository.findByuserId(id);
+        MessageResponse result = new MessageResponse();
+        if (userDetail.isPresent()) {
+            AppUser OldUser = userDetail.get();
+            OldUser.setPassword(encoder.encode(user.getPassword()));
+            OldUser.setName(user.getName());
+            OldUser.setAddress(user.getAddress());
+            OldUser.setphone(user.getphone());
+            result.setStatus(MessageResponse.Status.SUCCESS);
+            result.setMessage("Cập nhật thông tin thành công");
+            result.setData(userRepository.save(OldUser));
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.ACCEPTED);
+        } else {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Cập nhật thông tin không thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }
     }
     
     @PostMapping("/signup")
@@ -122,6 +151,7 @@ public class AuthController {
         result.setMessage("Đăng ký thành công");
         return new ResponseEntity<MessageResponse>(result, HttpStatus.ACCEPTED);
     }
+    
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
