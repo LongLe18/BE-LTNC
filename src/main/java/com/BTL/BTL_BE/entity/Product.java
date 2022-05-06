@@ -4,8 +4,7 @@
  */
 package com.BTL.BTL_BE.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
+
 
 /**
  *
@@ -45,7 +47,10 @@ public class Product {
     private String IDBrand;
     @Column(name="ID_Season")
     private int IDSeason;
-
+    
+    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    private Collection<ImageDetail> imageDetails;
+    
     public void setID_Product(String ID_Product) {
         this.IDProduct = ID_Product;
     }

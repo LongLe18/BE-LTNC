@@ -7,7 +7,6 @@ package com.BTL.BTL_BE.Dao;
 import com.BTL.BTL_BE.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;

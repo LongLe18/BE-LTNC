@@ -5,9 +5,8 @@
 package com.BTL.BTL_BE.controller;
 
 import com.BTL.BTL_BE.Dao.ProductDAO;
+import com.BTL.BTL_BE.Dao.ImagedetailDAO;
 import com.BTL.BTL_BE.entity.Product;
-import com.BTL.BTL_BE.payload.request.LoginRequest;
-import com.BTL.BTL_BE.payload.request.ProductRequest;
 import com.BTL.BTL_BE.payload.response.MessageResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,25 @@ public class ProductController {
     @Autowired
     ProductDAO productdao;
     
+    @Autowired
+    ImagedetailDAO imagedetailDao;
+    
+    @GetMapping("/getImageDetail")
+    public ResponseEntity<MessageResponse> GetImageDetail(@RequestParam(name="id") String ID)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            result.setData(imagedetailDao.findByProductsIDProduct(ID));
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
+    
     @GetMapping("/getProduct")
     public ResponseEntity<MessageResponse> GetAllProduct()
     {
@@ -50,6 +68,7 @@ public class ProductController {
             return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
         }    
     }
+    
     @GetMapping("/getproducts")
     public ResponseEntity<MessageResponse> getListProducts() {
         MessageResponse result = new MessageResponse();

@@ -4,75 +4,83 @@
  */
 package com.BTL.BTL_BE.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
  *
- * @author nguye
+ * @author ACER
  */
-@Entity
+
+import javax.persistence.*;
+        
+@Entity(name = "ImageDetail")
 @Table(name="ImageDetail")
 public class ImageDetail {
     @Id
     @Column(name="ID_Image",nullable = false)
-    private int ID_Image;
-    @Column(name="Detail_Image",length = Integer.MAX_VALUE)
-    private String Detail_Image;
-    @Column(name="ID_Product",length = 20)
-    private String ID_Product;
-    @Column(name="Detail_Image1",length = Integer.MAX_VALUE)
-    private String Detail_Image1;
-    @Column(name="Detail_Image2",length = Integer.MAX_VALUE)
-    private String Detail_Image2;
+    private int IDImage;
+    
+    @Column(name="Detail_Image",length = 2000)
+    private String DetailImage;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ID_Product", nullable = false)
+    private Product products;
+    
+    @Column(name="Detail_Image1",length = 2000)
+    private String DetailImage1;
+    
+    @Column(name="Detail_Image2",length = 2000)
+    private String DetailImage2;
 
-    public void setID_Image(int ID_Image) {
-        this.ID_Image = ID_Image;
+    public void setIDImage(int IDImage) {
+        this.IDImage = IDImage;
     }
 
-    public void setDetail_Image(String Detail_Image) {
-        this.Detail_Image = Detail_Image;
+    public void setDetailImage(String DetailImage) {
+        this.DetailImage = DetailImage;
     }
 
-    public void setID_Product(String ID_Product) {
-        this.ID_Product = ID_Product;
+//    public void setIDProduct(String IDProduct) {
+//        this.IDProduct = IDProduct;
+//    }
+
+    public void setDetailImage1(String DetailImage1) {
+        this.DetailImage1 = DetailImage1;
     }
 
-    public void setDetail_Image1(String Detail_Image1) {
-        this.Detail_Image1 = Detail_Image1;
+    public void setDetailImage2(String DetailImage2) {
+        this.DetailImage2 = DetailImage2;
     }
 
-    public void setDetail_Image2(String Detail_Image2) {
-        this.Detail_Image2 = Detail_Image2;
+    public int getIDImage() {
+        return IDImage;
     }
 
-    public int getID_Image() {
-        return ID_Image;
+    public String getDetailImage() {
+        return DetailImage;
     }
 
-    public String getDetail_Image() {
-        return Detail_Image;
-    }
-
-    public String getID_Product() {
-        return ID_Product;
-    }
+//    public String getIDProduct() {
+//        return IDProduct;
+//    }
 
     public String getDetail_Image1() {
-        return Detail_Image1;
+        return DetailImage1;
     }
 
-    public String getDetail_Image2() {
-        return Detail_Image2;
+    public String getDetailImage2() {
+        return DetailImage2;
     }
-
-    public ImageDetail(int ID_Image, String Detail_Image, String ID_Product, String Detail_Image1, String Detail_Image2) {
-        this.ID_Image = ID_Image;
-        this.Detail_Image = Detail_Image;
-        this.ID_Product = ID_Product;
-        this.Detail_Image1 = Detail_Image1;
-        this.Detail_Image2 = Detail_Image2;
+    
+    public ImageDetail() {
+        
+    }
+    
+    public ImageDetail(int IDImage, String DetailImage, String IDProduct, String DetailImage1, String DetailImage2) {
+        this.IDImage = IDImage;
+        this.DetailImage = DetailImage;
+//        this.IDProduct = IDProduct;
+        this.DetailImage1 = DetailImage1;
+        this.DetailImage2 = DetailImage2;
     }
 }
+
