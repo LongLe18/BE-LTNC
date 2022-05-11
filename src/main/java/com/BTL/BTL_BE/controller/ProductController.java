@@ -6,6 +6,7 @@ package com.BTL.BTL_BE.controller;
 
 import com.BTL.BTL_BE.Dao.ProductDAO;
 import com.BTL.BTL_BE.Dao.ImagedetailDAO;
+import com.BTL.BTL_BE.Dao.InsurranceDAO;
 import com.BTL.BTL_BE.entity.Product;
 import com.BTL.BTL_BE.payload.response.MessageResponse;
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class ProductController {
     
     @Autowired
     ImagedetailDAO imagedetailDao;
+    
+    @Autowired
+    InsurranceDAO insurranceDao;
     
     @GetMapping("/getImageDetail")
     public ResponseEntity<MessageResponse> GetImageDetail(@RequestParam(name="id") String ID)
@@ -115,11 +119,13 @@ public class ProductController {
     }
     @GetMapping("/getProductByIDBrand")
 //    public ResponseEntity<MessageResponse> GetProductByID(@Valid @RequestBody ProductRequest productRequest)
-    public ResponseEntity<MessageResponse> GetProductByID_Brand(@RequestParam(name="id_Brand") String ID)
+    public ResponseEntity<MessageResponse> GetProductByID_Brand(@RequestParam(name="id_Brand") String ID,
+            @RequestParam(name="pageSize") int pageSize, @RequestParam(name="pageIndex") int pageIndex)
     {
         MessageResponse result = new MessageResponse();
+        Pageable pageable = PageRequest.of(pageIndex, pageSize);
         try {
-            result.setData(productdao.findByIDBrand(ID));
+            result.setData(productdao.findByIDBrand(ID, pageable));
             result.setMessage("Thành công");
             return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
         } catch(Exception e) {
@@ -181,21 +187,12 @@ public class ProductController {
     }
     
     @GetMapping("/getSaleProduct")
-//    public ResponseEntity<MessageResponse> GetProductByID(@Valid @RequestBody ProductRequest productRequest)
     public ResponseEntity<MessageResponse> GetSaleProduct()
     {
         MessageResponse result = new MessageResponse();
         try {
-            List<Product> arr=productdao.findAll();
-            List<Product> arr2=new ArrayList<Product>();
-            for(int i=0;i<arr.size();i++)
-            {
-                if(arr.get(i).getSale() !=0)
-                {
-                    arr2.add(arr.get(i));
-                }
-            }
-            result.setData(arr2);
+            List<Product> arr = productdao.findBySaleGreaterThan(0);
+            result.setData(arr);
             result.setMessage("Thành công");
             return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
         } catch(Exception e) {
@@ -205,5 +202,21 @@ public class ProductController {
             return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
         }    
     }  
-        
+    
+    @GetMapping("/getInsurrenceBySeri/{seri}")
+    public ResponseEntity<MessageResponse> GetInsurrance(@PathVariable int seri)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            List<Object[]> arr = insurranceDao.find(seri);
+            result.setData(arr);
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    } 
 }

@@ -18,14 +18,14 @@ import javax.persistence.Table;
 public class Seri {
     @Id
     @Column(name="id_seri",nullable = false)
-    private int idSeri;
+    private Integer idSeri;
     @Column(name="Status_Seri")
-    private int statusSeri;
+    private Integer statusSeri;
 
     public Seri() {
     }
 
-    public Seri(int idSeri, int statusSeri, String idProduct, int idReceiptDetail, int idInvoiceDetail) {
+    public Seri(Integer idSeri, Integer statusSeri, String idProduct, Integer idReceiptDetail, Integer idInvoiceDetail) {
         this.idSeri = idSeri;
         this.statusSeri = statusSeri;
         this.idProduct = idProduct;
@@ -33,11 +33,11 @@ public class Seri {
         this.idInvoiceDetail = idInvoiceDetail;
     }
 
-    public void setIdSeri(int idSeri) {
+    public void setIdSeri(Integer idSeri) {
         this.idSeri = idSeri;
     }
 
-    public void setStatusSeri(int statusSeri) {
+    public void setStatusSeri(Integer statusSeri) {
         this.statusSeri = statusSeri;
     }
 
@@ -45,19 +45,19 @@ public class Seri {
         this.idProduct = idProduct;
     }
 
-    public void setIdReceiptDetail(int idReceiptDetail) {
+    public void setIdReceiptDetail(Integer idReceiptDetail) {
         this.idReceiptDetail = idReceiptDetail;
     }
 
-    public void setIdInvoiceDetail(int idInvoiceDetail) {
+    public void setIdInvoiceDetail(Integer idInvoiceDetail) {
         this.idInvoiceDetail = idInvoiceDetail;
     }
 
-    public int getIdSeri() {
+    public Integer getIdSeri() {
         return idSeri;
     }
 
-    public int getStatusSeri() {
+    public Integer getStatusSeri() {
         return statusSeri;
     }
 
@@ -65,17 +65,17 @@ public class Seri {
         return idProduct;
     }
 
-    public int getIdReceiptDetail() {
+    public Integer getIdReceiptDetail() {
         return idReceiptDetail;
     }
 
-    public int getIdInvoiceDetail() {
+    public Integer getIdInvoiceDetail() {
         return idInvoiceDetail;
     }
     @Column(name="ID_Product",length = 20)
     private String idProduct;
     @Column(name="ID_ReceiptDetail")
-    private int idReceiptDetail;
+    private Integer idReceiptDetail;
     @Column(name="ID_InvoiceDetail")
-    private int idInvoiceDetail;
+    private Integer idInvoiceDetail;
 }

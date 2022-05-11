@@ -37,10 +37,12 @@ public class Product {
     private String Describe;
     @Column(name="Price")
     private int Price;
+    
     @Column(name="Sale")
-    private int Sale;
+    private int sale;
+    
     @Column(name="Warranty_Period")
-    private int Warranty_Period;
+    private int WarrantyPeriod;
     @Column(name="ID_Category",length = 20)
     private String IDCategory;
     @Column(name="ID_Brand",length = 20)
@@ -76,11 +78,11 @@ public class Product {
     }
 
     public void setSale(int Sale) {
-        this.Sale = Sale;
+        this.sale = Sale;
     }
 
     public void setWarranty_Period(int Warranty_Period) {
-        this.Warranty_Period = Warranty_Period;
+        this.WarrantyPeriod = Warranty_Period;
     }
 
     public void setID_Category(String ID_Category) {
@@ -120,11 +122,11 @@ public class Product {
     }
 
     public int getSale() {
-        return Sale;
+        return sale;
     }
 
     public int getWarranty_Period() {
-        return Warranty_Period;
+        return WarrantyPeriod;
     }
 
     public String getID_Category() {
@@ -146,8 +148,8 @@ public class Product {
         this.Quantity = Quantity;
         this.Describe = Describe;
         this.Price = Price;
-        this.Sale = Sale;
-        this.Warranty_Period = Warranty_Period;
+        this.sale = Sale;
+        this.WarrantyPeriod = Warranty_Period;
         this.IDCategory = ID_Category;
         this.IDBrand = ID_Brand;
         this.IDSeason = ID_Season;

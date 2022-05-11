@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.thymeleaf.expression.Dates;
+import java.util.Date;
 
 /**
  *
@@ -34,9 +34,11 @@ public class Invoice implements Serializable {
     private String shippingAddress;
     @Column(name="Payment_Methods",length = 50)
     private String paymentMethods; 
-//    @Column(name="Purchase_Date",columnDefinition = Dates)
-//    @Temporal(TemporalType.DATE) 
-//    private Dates Image;
+    
+    @Column(name="Purchase_Date")
+    @Temporal(TemporalType.DATE) 
+    private Date purchaseDate;
+    
     @Column(name="Status_Order")
     private int statusOrder;
     @Column(name="Total_Invoice")
