@@ -41,7 +41,9 @@ public class AuthController {
     PasswordEncoder encoder;
     @Autowired
     JwtUtils jwtUtils;
-      
+    
+    public static String JWT;
+    
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Optional<AppUser> account = userRepository.findByemail(loginRequest.getEmail());
@@ -51,6 +53,9 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        
+        JWT = jwtCookie.toString();
+        
         List<String> roles = userDetails.getAuthorities().stream()
             .map(item -> item.getAuthority())
             .collect(Collectors.toList());
@@ -62,13 +67,13 @@ public class AuthController {
     }
     
     @GetMapping("/info")
-    public ResponseEntity<?> getInfoUser(@RequestHeader(value="X-API-KEY") String jwt) {
+    public ResponseEntity<?> getInfoUser() {
         try {
-            if (jwt == null) {
+            if (JWT == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
-                String JWT = Arrays.asList(Arrays.asList(jwt.split(";")).get(0).split("=")).get(1);
-                String UserId = jwtUtils.getIdFromJwtToken(JWT);
+                String jwt = Arrays.asList(Arrays.asList(JWT.split(";")).get(0).split("=")).get(1);
+                String UserId = jwtUtils.getIdFromJwtToken(jwt);
                 Optional<AppUser> userDetails = userRepository.findByuserId(UserId);                
                 return ResponseEntity.ok()
                     .body(userDetails);
