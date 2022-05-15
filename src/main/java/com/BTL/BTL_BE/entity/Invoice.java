@@ -42,14 +42,14 @@ public class Invoice implements Serializable {
     @Column(name="Status_Order")
     private int statusOrder;
     @Column(name="Total_Invoice")
-    private String totalInvoice;
+    private int totalInvoice;
     @Column(name="ID_Shipper")
     private Integer idShipper;
 
     public Invoice() {
     }
 
-    public Invoice(String idVoice, String idAccount, String shippingAddress, String paymentMethods, int statusOrder, String totalInvoice, Integer idShipper, String idEmployee) {
+    public Invoice(String idVoice, String idAccount, String shippingAddress, String paymentMethods, int statusOrder, int totalInvoice, Integer idShipper, String idEmployee) {
         this.idVoice = idVoice;
         this.idAccount = idAccount;
         this.shippingAddress = shippingAddress;
@@ -59,7 +59,11 @@ public class Invoice implements Serializable {
         this.idShipper = idShipper;
         this.idEmployee = idEmployee;
     }
-
+    
+    public void setPurchaseDate(Date date) {
+        this.purchaseDate = date;
+    }
+    
     public void setIdVoice(String idVoice) {
         this.idVoice = idVoice;
     }
@@ -67,7 +71,11 @@ public class Invoice implements Serializable {
     public void setIdAccount(String idAccount) {
         this.idAccount = idAccount;
     }
-
+    
+    public void setTimeLimit(Date time) {
+        this.timelimit = time;
+    }
+    
     public void setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
@@ -80,7 +88,7 @@ public class Invoice implements Serializable {
         this.statusOrder = statusOrder;
     }
 
-    public void setTotalInvoice(String totalInvoice) {
+    public void setTotalInvoice(int totalInvoice) {
         this.totalInvoice = totalInvoice;
     }
 
@@ -112,7 +120,7 @@ public class Invoice implements Serializable {
         return statusOrder;
     }
 
-    public String getTotalInvoice() {
+    public int getTotalInvoice() {
         return totalInvoice;
     }
     @JsonIgnoreProperties
@@ -123,20 +131,34 @@ public class Invoice implements Serializable {
     public String getIdEmployee() {
         return idEmployee;
     }
+    
+    public Date getTimeLitmit() {
+        return timelimit;
+    }
+    
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+        
     @Column(name="ID_Employee",length = 20)
     private String idEmployee;
-//    @Column(name="Purchase_Date",columnDefinition = Dates)
-//    @Temporal(TemporalType.DATE) 
-//    private Dates Image;
+    
+    @Column(name="Time_Limit")
+    @Temporal(TemporalType.DATE) 
+    private Date timelimit;
 
-    public Invoice(String idVoice, String idAccount, String shippingAddress, String paymentMethods, int statusOrder, String totalInvoice, String idEmployee) {
+    public Invoice(String idVoice, String idAccount, String shippingAddress, String paymentMethods, Date purchasedate,
+            int statusOrder, int totalInvoice, int idShipper, String idEmployee, Date timelimit) {
         this.idVoice = idVoice;
         this.idAccount = idAccount;
         this.shippingAddress = shippingAddress;
         this.paymentMethods = paymentMethods;
+        this.purchaseDate = purchasedate;
         this.statusOrder = statusOrder;
         this.totalInvoice = totalInvoice;
+        this.idShipper = idShipper;
         this.idEmployee = idEmployee;
+        this.timelimit = timelimit;
     }
     
 }

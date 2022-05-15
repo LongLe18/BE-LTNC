@@ -29,19 +29,19 @@ public class InvoiceDetail {
 //    @Temporal(TemporalType.DATE) 
 //    private Date Image;
     @Column(name="Price")
-    private int statusOrder;
+    private int price;
     @Column(name="Sale")
     private int sale;
 
     public InvoiceDetail() {
     }
 
-    public InvoiceDetail (int idInvoiceDetail, String idInvoice, String idProduct, int quantity, int statusOrder, int sale, int total) {
+    public InvoiceDetail (int idInvoiceDetail, String idInvoice, String idProduct, int quantity, int price, int sale, int total) {
         this.idInvoiceDetail = idInvoiceDetail;
         this.idInvoice = idInvoice;
         this.idProduct = idProduct;
         this.quantity = quantity;
-        this.statusOrder = statusOrder;
+        this.price = price;
         this.sale = sale;
         this.total = total;
     }
@@ -62,8 +62,8 @@ public class InvoiceDetail {
         this.quantity = quantity;
     }
 
-    public void setStatusOrder(int statusOrder) {
-        this.statusOrder = statusOrder;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public void setSale(int sale) {
@@ -90,8 +90,8 @@ public class InvoiceDetail {
         return quantity;
     }
 
-    public int getStatusOrder() {
-        return statusOrder;
+    public int getPrice() {
+        return price;
     }
 
     public int getSale() {
