@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -266,6 +267,24 @@ public class ProductController {
             productdao.save(ExistProduct);
             result.setData(ExistProduct);
             result.setMessage("Thay đổi sản phẩm thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+                
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }  
+    @DeleteMapping("/Delete")
+    public ResponseEntity<MessageResponse> DeleteProduct(@RequestParam(name="id") String ID)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            Product ExistProduct=productdao.findByIDProduct(ID).get(0);
+//         
+            productdao.delete(ExistProduct);
+//            result.setData(ExistProduct);
+            result.setMessage("Xóa sản phẩm thành công");
             return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
         } catch(Exception e) {
             result.setStatus(MessageResponse.Status.FAILED);
