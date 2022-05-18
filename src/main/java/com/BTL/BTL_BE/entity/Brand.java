@@ -57,4 +57,14 @@ public class Brand {
     public void setParentBrand(String name) {
         this.parentBrand = name;
     }
+
+    public Brand(String idBrand, String namebrand, String country, String parentBrand) {
+        this.idBrand = idBrand;
+        this.namebrand = namebrand;
+        this.country = country;
+        this.parentBrand = parentBrand;
+    }
+
+    public Brand() {
+    }
 }

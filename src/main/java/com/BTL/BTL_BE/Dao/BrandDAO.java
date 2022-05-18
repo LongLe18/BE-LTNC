@@ -24,4 +24,7 @@ public interface BrandDAO extends JpaRepository<Brand, Long>{
     
     @Query("SELECT u FROM Brand u WHERE u.parentBrand=?1")
     ArrayList<Brand> getListSubBrand(String ID_Brand);
+    
+    Brand findTopByOrderByIdBrandDesc();
+    ArrayList<Brand> findByIdBrand(String ID);
 }
