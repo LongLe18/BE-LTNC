@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Season {
     @Id
     @Column(name = "ID_Season", nullable = false)
-    private int id_Season;
+    private int IDSeason;
     
     @Column(name = "Name_Season",length =50 , nullable = false)
     private String name_Season;
@@ -53,13 +53,13 @@ public class Season {
 //        this.dateEnd = DateEnd;
 //    }
      public Season(int ID_Season, String Name_Season, Date DateStart, Date DateEnd) {
-        this.id_Season = ID_Season;
+        this.IDSeason = ID_Season;
         this.name_Season = Name_Season;
 //        this.dateStart = DateStart;
 //        this.dateEnd = DateEnd;
     }
     public void setID_Season(int ID_Season) {
-        this.id_Season = ID_Season;
+        this.IDSeason = ID_Season;
     }
 
     public void setName_Season(String Name_Season) {
@@ -69,7 +69,7 @@ public class Season {
 
 
     public int getID_Season() {
-        return id_Season;
+        return IDSeason;
     }
 
     public String getName_Season() {
