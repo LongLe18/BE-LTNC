@@ -20,17 +20,21 @@ import com.BTL.BTL_BE.entity.Invoice;
 import com.BTL.BTL_BE.entity.InvoiceDetail;
 import com.BTL.BTL_BE.entity.Product;
 import com.BTL.BTL_BE.entity.ProductCheckout;
+import com.BTL.BTL_BE.entity.Shipper;
 
 import com.BTL.BTL_BE.payload.response.MessageResponse;
 import java.util.Random;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -65,6 +69,65 @@ public class PaymentController {
             return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
         }    
     }
+    @PostMapping("/AddShipper")
+    public ResponseEntity<MessageResponse> AddShipper(@RequestBody Shipper shipper)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            Shipper ExistShipper=shipperdao.findTopByOrderByIdShipperDesc();
+//            Integer id= (Integer.parseInt(ExistProduct.getID_Product())+1);
+            Shipper ShipperInsert=new Shipper(ExistShipper.getIdShipper()+1,ExistShipper.getNameShipper(),ExistShipper.getPhoneShipper(),ExistShipper.getCompanyShipper());
+            shipperdao.save(ShipperInsert);
+            result.setData(ShipperInsert);
+            result.setMessage("Thêm người giao hàng thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+                
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }  
+    @PutMapping("/ChangeShipper")
+    public ResponseEntity<MessageResponse> ChangeProduct(@RequestParam(name="id") int ID,
+  @Valid @RequestBody Shipper shipper)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            Shipper ExistShipper=shipperdao.findByidShipper(ID).get(0);
+            ExistShipper.setCompanyShipper(shipper.getCompanyShipper());
+            ExistShipper.setNameShipper(shipper.getNameShipper());
+            ExistShipper.setPhoneShipper(shipper.getPhoneShipper());
+            
+            shipperdao.save(ExistShipper);
+            result.setData(ExistShipper);
+            result.setMessage("Thay đổi thông tin người giao hàng thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+                
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }  
+    @DeleteMapping("/Delete")
+    public ResponseEntity<MessageResponse> DeleteProduct(@RequestParam(name="id") int ID)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            Shipper ExistShipper=shipperdao.findByidShipper(ID).get(0);
+//         
+            shipperdao.delete(ExistShipper);
+            result.setData(ExistShipper);
+            result.setMessage("Xóa thông tin người giao hàng thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+                
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }  
     
     @PostMapping("/checkout")
     public ResponseEntity<MessageResponse> PostPayment(@RequestBody Payment payment) {

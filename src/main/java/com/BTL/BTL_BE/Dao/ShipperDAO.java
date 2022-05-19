@@ -4,6 +4,7 @@
  */
 package com.BTL.BTL_BE.Dao;
 
+import com.BTL.BTL_BE.entity.Product;
 import com.BTL.BTL_BE.entity.Shipper;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,5 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface ShipperDAO extends JpaRepository<Shipper, Long>{
     List<Shipper> findByidShipper(int IDSeasion);
+    Shipper findTopByOrderByIdShipperDesc();
 }

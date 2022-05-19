@@ -25,7 +25,7 @@ import javax.persistence.CascadeType;
 @Table(name="Product")
 public class Product {
     @Id
-    @Column(name="ID_Product",length = 20,nullable = false)
+    @Column(name="ID_Product",length = 20)
     private String IDProduct;
     @Column(name="Name_Product",length = 50)
     private String nameProduct;

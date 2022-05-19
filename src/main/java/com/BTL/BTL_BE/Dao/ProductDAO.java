@@ -33,4 +33,9 @@ public interface ProductDAO extends JpaRepository<Product, Long>{
     List<Product> findByIDSeason(int IDSeasion);
     List<Product> findByNameProduct(String Name);
     List<Product> findBySaleGreaterThan(int sale);
+    
+//    @Query(value = "SELECT u.IDProduct FROM Product u ORDER BY u.IDProduct DESC")
+//    public String max();
+//    
+    Product findTopByOrderByIDProductDesc();
 }
