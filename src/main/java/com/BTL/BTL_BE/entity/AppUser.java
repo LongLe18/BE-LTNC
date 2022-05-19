@@ -27,7 +27,7 @@ public class AppUser {
     @Column(name = "Password", length = 120)
     private String password;
 
-    @Column(name = "auth", length = 1)
+    @Column(name = "auth")
     private boolean auth;
     
     @Column(name = "Email", length = 50)
@@ -89,7 +89,7 @@ public class AppUser {
         this.password = Password;
     }
 
-    public boolean isAuth() {
+    public boolean getAuth() {
         return auth;
     }
 

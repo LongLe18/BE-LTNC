@@ -74,7 +74,7 @@ public class AuthController {
             } else {
                 String jwt = Arrays.asList(Arrays.asList(JWT.split(";")).get(0).split("=")).get(1);
                 String UserId = jwtUtils.getIdFromJwtToken(jwt);
-                Optional<AppUser> userDetails = userRepository.findByuserId(UserId);                
+                Optional<AppUser> userDetails = userRepository.findByuserId(UserId); 
                 return ResponseEntity.ok()
                     .body(userDetails);
             }        
@@ -83,16 +83,46 @@ public class AuthController {
         }
     }
     
-    @PutMapping("/user/{id}")
-    public ResponseEntity<MessageResponse> updateUser(@PathVariable("id") String id, @RequestBody AppUser user) {
+    @PutMapping("/user/{id}/{confirm}")
+    public ResponseEntity<MessageResponse> updateUser(@PathVariable("id") String id, @RequestBody AppUser user, 
+            @PathVariable("confirm") String confirm) {
         Optional<AppUser> userDetail = userRepository.findByuserId(id);
         MessageResponse result = new MessageResponse();
         if (userDetail.isPresent()) {
             AppUser OldUser = userDetail.get();
-            OldUser.setPassword(encoder.encode(user.getPassword()));
+            if (encoder.matches(confirm, OldUser.getPassword())) {
+                OldUser.setPassword(encoder.encode(user.getPassword()));
+            } else {
+                result.setStatus(MessageResponse.Status.FAILED);
+                result.setMessage("Mật khẩu xác thực không đúng");
+                return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+            }
             OldUser.setName(user.getName());
             OldUser.setAddress(user.getAddress());
             OldUser.setphone(user.getphone());
+            result.setStatus(MessageResponse.Status.SUCCESS);
+            result.setMessage("Cập nhật thông tin thành công");
+            result.setData(userRepository.save(OldUser));
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.ACCEPTED);
+        } else {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Cập nhật thông tin không thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @GetMapping("/user/{id}/{status}")
+    public ResponseEntity<MessageResponse> changeAuth(@PathVariable("id") String id, @PathVariable("status") String status) {
+        Optional<AppUser> userDetail = userRepository.findByuserId(id);
+        MessageResponse result = new MessageResponse();
+        if (userDetail.isPresent()) { 
+            AppUser OldUser = userDetail.get();
+            if (status.equals("1")) {
+                OldUser.setAuth(true);
+            } else {
+                OldUser.setAuth(false);
+            }
+            userRepository.save(OldUser);
             result.setStatus(MessageResponse.Status.SUCCESS);
             result.setMessage("Cập nhật thông tin thành công");
             result.setData(userRepository.save(OldUser));
