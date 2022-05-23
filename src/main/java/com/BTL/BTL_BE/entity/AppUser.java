@@ -24,11 +24,11 @@ public class AppUser {
     @Column(name = "Username", length = 50)
     private String userName;
     
-    @Column(name = "Password", length = 120)
+    @Column(name = "Password", length = 120, nullable = false)
     private String password;
 
-    @Column(name = "auth")
-    private boolean auth;
+    @Column(name = "auth", nullable = true)
+    private Boolean auth = false;
     
     @Column(name = "Email", length = 50)
     private String email;
@@ -89,7 +89,7 @@ public class AppUser {
         this.password = Password;
     }
 
-    public boolean getAuth() {
+    public Boolean getAuth() {
         return auth;
     }
 

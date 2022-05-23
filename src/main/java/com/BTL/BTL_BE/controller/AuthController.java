@@ -180,6 +180,8 @@ public class AuthController {
             }
           });
         }
+        user.setAcess(2);
+        user.setStatus(1);
         user.setRoles(roles);
         userRepository.save(user);
         MessageResponse result = new MessageResponse();
