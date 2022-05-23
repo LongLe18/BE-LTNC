@@ -13,13 +13,16 @@ import com.BTL.BTL_BE.payload.response.*;
 import com.BTL.BTL_BE.Dao.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -120,5 +123,32 @@ public class UserController {
             
             return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
         }   
+    }
+    
+    @PutMapping("/updateUser")
+    public ResponseEntity<MessageResponse> updateUser(@RequestBody AppUser user) {
+        Optional<AppUser> userDetail = userRepository.findByuserId(user.getUserId());
+        MessageResponse result = new MessageResponse();
+        if (userDetail.isPresent()) {
+            AppUser OldUser = userDetail.get();
+            ///update user
+            OldUser.setName(user.getName());
+            OldUser.setAddress(user.getAddress());
+            OldUser.setphone(user.getphone());
+            OldUser.setUserName(user.getUserName());
+            OldUser.setAuth(user.getAuth());
+            OldUser.setEmail(user.getEmail());
+            OldUser.setAcess(user.getAcess());
+            OldUser.setRoles(user.getRoles());
+            
+            result.setStatus(MessageResponse.Status.SUCCESS);
+            result.setMessage("Cập nhật thông tin thành công");
+            result.setData(userRepository.save(OldUser));
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.ACCEPTED);
+        } else {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Cập nhật thông tin không thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }
     }
 }
