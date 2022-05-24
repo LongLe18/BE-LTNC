@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface InvoiceDAO extends JpaRepository<Invoice, Long> {
     List<Invoice> findAll();
-    Optional<Invoice> findByIdInvoice(String ID);
+    Invoice findByIdInvoice(String ID);
     List<Invoice> findBystatusOrder(int status);
     Invoice findTopByOrderByIdInvoiceDesc();
 }
