@@ -27,7 +27,7 @@ import java.util.Date;
 public class Invoice implements Serializable {
     @Id
     @Column(name="ID_Invoice",length = 20,nullable = false)
-    private String idVoice;
+    private String idInvoice;
     @Column(name="ID_Account",length = 20)
     private String idAccount;
     @Column(name="Shipping_Address",length = 50)
@@ -49,8 +49,21 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
+    public Invoice(String idVoice, String idAccount, String shippingAddress, String paymentMethods, Date purchaseDate, int statusOrder, int totalInvoice, Integer idShipper, String idEmployee, Date timelimit) {
+        this.idInvoice = idVoice;
+        this.idAccount = idAccount;
+        this.shippingAddress = shippingAddress;
+        this.paymentMethods = paymentMethods;
+        this.purchaseDate = purchaseDate;
+        this.statusOrder = statusOrder;
+        this.totalInvoice = totalInvoice;
+        this.idShipper = idShipper;
+        this.idEmployee = idEmployee;
+        this.timelimit = timelimit;
+    }
+
     public Invoice(String idVoice, String idAccount, String shippingAddress, String paymentMethods, int statusOrder, int totalInvoice, Integer idShipper, String idEmployee) {
-        this.idVoice = idVoice;
+        this.idInvoice = idVoice;
         this.idAccount = idAccount;
         this.shippingAddress = shippingAddress;
         this.paymentMethods = paymentMethods;
@@ -65,7 +78,7 @@ public class Invoice implements Serializable {
     }
     
     public void setIdVoice(String idVoice) {
-        this.idVoice = idVoice;
+        this.idInvoice = idVoice;
     }
 
     public void setIdAccount(String idAccount) {
@@ -101,7 +114,7 @@ public class Invoice implements Serializable {
     }
 
     public String getIdVoice() {
-        return idVoice;
+        return idInvoice;
     }
 
     public String getIdAccount() {
@@ -149,7 +162,7 @@ public class Invoice implements Serializable {
 
     public Invoice(String idVoice, String idAccount, String shippingAddress, String paymentMethods, Date purchasedate,
             int statusOrder, int totalInvoice, int idShipper, String idEmployee, Date timelimit) {
-        this.idVoice = idVoice;
+        this.idInvoice = idVoice;
         this.idAccount = idAccount;
         this.shippingAddress = shippingAddress;
         this.paymentMethods = paymentMethods;

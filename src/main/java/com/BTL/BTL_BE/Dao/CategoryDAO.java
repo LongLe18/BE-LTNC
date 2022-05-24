@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryDAO extends JpaRepository<Category, Long> {
     List<Category> findAll();
+    Category findByIDCategory(String ID);
     @Query("SELECT u FROM Category u WHERE u.Parent_Category='null'")
     ArrayList<Category> getListParentCategory();
     
