@@ -18,14 +18,14 @@ import javax.persistence.Table;
 public class Category {
     @Id
     @Column(name="ID_Category",length = 20, nullable = false)
-    private String ID_Category;
+    private String IDCategory;
     @Column(name="Name_Category",length = 50)
     private String Name_Category;
     @Column(name="Parent_Category",length = 50)
     private String Parent_Category;
 
     public void setID_Category(String ID_Category) {
-        this.ID_Category = ID_Category;
+        this.IDCategory = ID_Category;
     }
 
     public void setName_Category(String Name_Category) {
@@ -37,7 +37,7 @@ public class Category {
     }
 
     public String getID_Category() {
-        return ID_Category;
+        return IDCategory;
     }
 
     public String getName_Category() {
@@ -49,7 +49,7 @@ public class Category {
     }
 
     public Category(String ID_Category, String Name_Category, String Parent_Category) {
-        this.ID_Category = ID_Category;
+        this.IDCategory = ID_Category;
         this.Name_Category = Name_Category;
         this.Parent_Category = Parent_Category;
     }
