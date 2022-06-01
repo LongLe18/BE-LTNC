@@ -8,14 +8,12 @@ package com.BTL.BTL_BE.Dao;
  *
  * @author ACER
  */
-import java.util.*;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.BTL.BTL_BE.entity.InvoiceDetail;
+import java.util.List;
 import org.springframework.stereotype.Repository;
-import com.BTL.BTL_BE.entity.Warranty;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface WarrantyDAO extends JpaRepository<Warranty, Long>{
-    List<Warranty> findAll();
-    Warranty findByidWarranty(int id);
+public interface InvoiceDetailDAO extends JpaRepository<InvoiceDetail, Long>{
+    List<InvoiceDetail> findByidInvoice(String idinvoice);
 }
-

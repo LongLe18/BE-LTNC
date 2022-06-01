@@ -6,6 +6,9 @@ package com.BTL.BTL_BE.controller;
 
 import com.BTL.BTL_BE.Dao.InvoiceDAO;
 import com.BTL.BTL_BE.Dao.SeasonDAO;
+import com.BTL.BTL_BE.Dao.Invoice2DAO;
+import com.BTL.BTL_BE.Dao.InvoiceDetailDAO;
+
 import com.BTL.BTL_BE.entity.Invoice;
 import com.BTL.BTL_BE.entity.Product;
 import com.BTL.BTL_BE.entity.Season;
@@ -39,6 +42,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class InvoiceController {
     @Autowired
     InvoiceDAO invoicedao;
+    
+    @Autowired
+    Invoice2DAO invoicedao2;
+    
+    @Autowired
+    InvoiceDetailDAO detail;
+    
     @GetMapping("/getInvoice")
     public ResponseEntity<MessageResponse> GetAllInvoice()
     {
@@ -87,12 +97,7 @@ public class InvoiceController {
     public ResponseEntity<MessageResponse> AddInvoice(@RequestBody Invoice invoice)
     {
         MessageResponse result = new MessageResponse();
-        try {
-//            Brand ExistBrand=brandRepository.findTopByOrderByIdBrandDesc();
-//            String Id_Brand=ExistBrand.getIdBrand();
-//            Integer ID_Brand=Integer.parseInt(Id_Brand.substring(2,Id_Brand.length()))+1;
-//            Id_Brand=Id_Brand.substring(0,2)+ID_Brand.toString();
-            
+        try {      
             Invoice ExistInvoice=invoicedao.findTopByOrderByIdInvoiceDesc();
             String Id_Invoice=ExistInvoice.getIdVoice();
             long ID_Invoice=Long.parseLong(Id_Invoice.substring(3,Id_Invoice.length()))+1;
@@ -117,24 +122,20 @@ public class InvoiceController {
     }  
     @PutMapping("/ChangeInvoice")
     public ResponseEntity<MessageResponse> ChangeInvoice(@RequestParam(name="id") String ID,
-  @Valid @RequestBody Invoice invoice)
+        @Valid @RequestBody Invoice invoice)
     {
         MessageResponse result = new MessageResponse();
         try {
             Invoice ExistInvoice=invoicedao.findByIdInvoice(ID);
-//            Integer id= (Integer.parseInt(ExistProduct.getID_Product())+1);
-//            Product ProductInsert=new Product(id.toString(),product.getName_Product(),product.getImage(),product.getQuantity(),
-//                    product.getDescribe(),product.getPrice(),product.getSale(),product.getWarranty_Period(),
-//                    product.getID_Category(),product.getID_Brand(),product.getID_Season());
-            ExistInvoice.setIdAccount(invoice.getIdAccount());
-            ExistInvoice.setShippingAddress(invoice.getShippingAddress());
-            ExistInvoice.setPaymentMethods(invoice.getPaymentMethods());
+//            ExistInvoice.setIdAccount(invoice.getIdAccount());
+//            ExistInvoice.setShippingAddress(invoice.getShippingAddress());
+//            ExistInvoice.setPaymentMethods(invoice.getPaymentMethods());
             ExistInvoice.setStatusOrder(invoice.getStatusOrder());
-            ExistInvoice.setTotalInvoice(invoice.getTotalInvoice());
-            ExistInvoice.setIdShipper(invoice.getIdShipper());
-            ExistInvoice.setIdEmployee(invoice.getIdEmployee());
-            ExistInvoice.setPurchaseDate(invoice.getPurchaseDate());
-            ExistInvoice.setTimeLimit(invoice.getTimeLitmit());
+//            ExistInvoice.setTotalInvoice(invoice.getTotalInvoice());
+//            ExistInvoice.setIdShipper(invoice.getIdShipper());
+//            ExistInvoice.setIdEmployee(invoice.getIdEmployee());
+//            ExistInvoice.setPurchaseDate(invoice.getPurchaseDate());
+//            ExistInvoice.setTimeLimit(invoice.getTimeLitmit());
             
             invoicedao.save(ExistInvoice);
             result.setData(ExistInvoice);
@@ -166,5 +167,33 @@ public class InvoiceController {
         }    
     }  
     
+    @GetMapping("/getInvoice2")
+    public ResponseEntity<MessageResponse> GetAllInvoice2()
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            result.setData(invoicedao2.find());
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
     
+    @GetMapping("/getDetailInvoice")
+    public ResponseEntity<MessageResponse> GetDetailInvoice(@RequestParam(name="id") String ID)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            result.setData(detail.findByidInvoice(ID));
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
 }

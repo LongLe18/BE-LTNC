@@ -7,6 +7,8 @@ package com.BTL.BTL_BE.entity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,16 +21,27 @@ import javax.persistence.TemporalType;
 @Table(name="Receipt")
 public class Receipt {
     @Id
-    @Column(name="ID_Receipt",nullable = false)
+    @Column(name="ID_Receipt", nullable = true)
     private int idReceipt;
+    
     @Column(name="ID_Account",length=20)
     private String idAccount;
-//    @Column(name="Created_date")
-//    @Temporal(TemporalType.DATE) 
-//    private Date createdDate;
+    
+    @Column(name="Created_date")
+    @Temporal(TemporalType.DATE) 
+    private Date createdDate;
+    
     @Column(name="total")
     private int total;
-
+    
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+    
+    public void setCreatedDate(Date date) {
+        this.createdDate = date;
+    }
+    
     public int getIdReceipt() {
         return idReceipt;
     }
@@ -53,9 +66,10 @@ public class Receipt {
         this.total = total;
     }
 
-    public Receipt(int idReceipt, String idAccount, int total) {
-        this.idReceipt = idReceipt;
+    public Receipt(int id, String idAccount, Date date,int total) {
+        this.idReceipt = id;
         this.idAccount = idAccount;
+        this.createdDate = date;
         this.total = total;
     }
 

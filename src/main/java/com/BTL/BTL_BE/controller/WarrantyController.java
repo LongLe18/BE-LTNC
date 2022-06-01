@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.BTL.BTL_BE.Dao.WarrantyDAO;
 import com.BTL.BTL_BE.payload.response.MessageResponse;
+import com.BTL.BTL_BE.entity.Warranty;
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -38,4 +40,40 @@ public class WarrantyController {
             return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
         }    
     }
+    
+    @GetMapping("/getWarranty/{ID_Warranty}")
+    public ResponseEntity<MessageResponse> getWarranty (@PathVariable int ID_Warranty) {
+        MessageResponse result = new MessageResponse();
+        try {
+            result.setData(warrantyRepository.findByidWarranty(ID_Warranty));
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
+    
+    @PutMapping("/ChangeWarranty")
+    public ResponseEntity<MessageResponse> ChangeWarranty(@RequestParam(name="id") int ID,
+            @Valid @RequestBody Warranty warranty)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            Warranty ExistWarrenty = warrantyRepository.findByidWarranty(ID);
+            ExistWarrenty.setStatus(warranty.getStatus());
+            ExistWarrenty.setReturnDate(warranty.getReturnDate());            
+      
+            warrantyRepository.save(ExistWarrenty);
+            result.setData(ExistWarrenty);
+            result.setMessage("Thay đổi bảo hành thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+                
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }  
 }

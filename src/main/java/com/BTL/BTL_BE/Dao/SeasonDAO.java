@@ -17,6 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SeasonDAO extends JpaRepository<Season, Long> {
     List<Season> findAll();
-   
+    Season findByIDSeason(int id);
     
 }
