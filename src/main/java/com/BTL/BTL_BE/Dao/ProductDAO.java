@@ -34,8 +34,8 @@ public interface ProductDAO extends JpaRepository<Product, Long>{
     List<Product> findByNameProduct(String Name);
     List<Product> findBySaleGreaterThan(int sale);
     
-//    @Query(value = "SELECT u.IDProduct FROM Product u ORDER BY u.IDProduct DESC")
-//    public String max();
-//    
+    @Query("SELECT u FROM Product u WHERE u.IDBrand LIKE '%' || :idbrand || '%' and u.IDCategory LIKE '%' || :idcate || '%' and u.IDSeason LIKE '%' || :idseason || '%' and u.Describe LIKE '%' || :describe || '%'")
+    ArrayList<Product> Search(String idbrand, String idcate, String idseason, String describe);
+    
     Product findTopByOrderByIDProductDesc();
 }

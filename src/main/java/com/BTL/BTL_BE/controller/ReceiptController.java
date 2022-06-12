@@ -62,6 +62,21 @@ public class ReceiptController {
         }    
     }
     
+    @GetMapping("/dashboard2")
+    public ResponseEntity<MessageResponse> Dashboard2(@RequestParam(name="idcate") String ID)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            result.setData(receiptdetailrepository.getDashboard2(ID));
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
+    
     @GetMapping("/getReceipt")
     public ResponseEntity<MessageResponse> GetAllReceipts()
     {

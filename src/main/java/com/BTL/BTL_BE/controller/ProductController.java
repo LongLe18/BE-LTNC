@@ -7,6 +7,7 @@ package com.BTL.BTL_BE.controller;
 import com.BTL.BTL_BE.Dao.ProductDAO;
 import com.BTL.BTL_BE.Dao.ImagedetailDAO;
 import com.BTL.BTL_BE.Dao.InsurranceDAO;
+import com.BTL.BTL_BE.Dao.Product2DAO;
 import com.BTL.BTL_BE.entity.Product;
 import com.BTL.BTL_BE.payload.response.MessageResponse;
 import java.util.ArrayList;
@@ -39,6 +40,9 @@ public class ProductController {
     ProductDAO productdao;
     
     @Autowired
+    Product2DAO productdao2;
+    
+    @Autowired
     ImagedetailDAO imagedetailDao;
     
     @Autowired
@@ -50,6 +54,40 @@ public class ProductController {
         MessageResponse result = new MessageResponse();
         try {
             result.setData(imagedetailDao.findByProductsIDProduct(ID));
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
+       
+    @GetMapping("/search")
+    public ResponseEntity<MessageResponse> Search(@RequestParam(name="idbrand") String idbrand, 
+            @RequestParam(name="idcate") String idcate, @RequestParam(name="idseason") String idseason, 
+            @RequestParam(name="describe") String describe)
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            result.setData(productdao.Search(idbrand, idcate, idseason, describe));
+            result.setMessage("Thành công");
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
+        } catch(Exception e) {
+            result.setStatus(MessageResponse.Status.FAILED);
+            result.setMessage("Lỗi " + e);
+            
+            return new ResponseEntity<MessageResponse>(result, HttpStatus.BAD_REQUEST);
+        }    
+    }
+    
+    @GetMapping("/getProductFastly")
+    public ResponseEntity<MessageResponse> getProductFastly()
+    {
+        MessageResponse result = new MessageResponse();
+        try {
+            result.setData(productdao2.getListProduct());
             result.setMessage("Thành công");
             return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
         } catch(Exception e) {
@@ -245,7 +283,7 @@ public class ProductController {
     }  
     @PutMapping("/ChangeProduct")
     public ResponseEntity<MessageResponse> ChangeProduct(@RequestParam(name="id") String ID,
-  @Valid @RequestBody Product product)
+            @Valid @RequestBody Product product)
     {
         MessageResponse result = new MessageResponse();
         try {
