@@ -319,9 +319,8 @@ public class ProductController {
         MessageResponse result = new MessageResponse();
         try {
             Product ExistProduct=productdao.findByIDProduct(ID).get(0);
-//         
+            System.out.println(ExistProduct.getName_Product());
             productdao.delete(ExistProduct);
-//            result.setData(ExistProduct);
             result.setMessage("Xóa sản phẩm thành công");
             return new ResponseEntity<MessageResponse>(result, HttpStatus.OK);
         } catch(Exception e) {

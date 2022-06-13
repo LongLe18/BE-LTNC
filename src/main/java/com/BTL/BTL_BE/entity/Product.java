@@ -5,6 +5,7 @@
 package com.BTL.BTL_BE.entity;
 
 import java.util.*;
+import javax.persistence.Lob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,8 +30,9 @@ public class Product {
     private String IDProduct;
     @Column(name="Name_Product",length = 50)
     private String nameProduct;
-    @Column(name="Image",length = Integer.MAX_VALUE)
+    @Column(name="Image",length = 300)
     private String Image;
+    
     @Column(name="Quantity")
     private int Quantity;
     @Column(name="Describe",length = 200)
@@ -141,7 +143,9 @@ public class Product {
         return IDSeason;
     }
 
-    public Product(String ID_Product, String Name_Product, String Image, int Quantity, String Describe, int Price, int Sale, int Warranty_Period, String ID_Category, String ID_Brand, int ID_Season) {
+
+    public Product(String ID_Product, String Name_Product, String Image, int Quantity, String Describe, int Price, int Sale, 
+            int Warranty_Period, String ID_Category, String ID_Brand, int ID_Season) {
         this.IDProduct = ID_Product;
         this.nameProduct = Name_Product;
         this.Image = Image;
